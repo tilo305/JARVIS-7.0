@@ -207,7 +207,6 @@ const MainLayout = ({
           className="flex-shrink-0 p-2 text-center"
         >
           <div className="text-xs text-jarvis-blue/50 font-rajdhani">
-            <p>Powered by ElevenLabs Conversational AI • Built with React & Tailwind CSS</p>
           </div>
         </motion.footer>
       </div>
