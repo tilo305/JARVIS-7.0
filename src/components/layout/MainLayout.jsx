@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../utils/index.js';
 import ChatWindow from '../chat/ChatWindow.jsx';
-import ElevenLabsWidget, { ElevenLabsWidgetToggle } from '../voice/ElevenLabsWidget.jsx';
+import ElevenLabsWidget from '../voice/ElevenLabsWidget.jsx';
 import ironManVideo from '../../assets/IronmanWEBM.webm';
 
 const HeroVideo = ({ className, onLoadingChange }) => {
@@ -103,21 +103,15 @@ const MainLayout = ({
 }) => {
   const [isVideoLoading, setIsVideoLoading] = useState(true);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
-  const [showElevenLabsWidget, setShowElevenLabsWidget] = useState(false);
-
+  
   // Handle voice state changes from chat window
   const handleVoiceStateChange = (isActive) => {
     setIsVoiceActive(isActive);
   };
 
-  // Handle ElevenLabs widget toggle
-  const handleWidgetToggle = () => {
-    setShowElevenLabsWidget(!showElevenLabsWidget);
-  };
-
   return (
     <div className={cn(
-      'relative min-h-screen w-full overflow-hidden',
+      'relative h-screen w-full overflow-hidden',
       'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900',
       className
     )}>
@@ -128,17 +122,17 @@ const MainLayout = ({
       />
 
       {/* Main content area */}
-      <div className="relative z-10 min-h-screen flex flex-col">
+      <div className="relative z-10 h-screen flex flex-col">
         {/* Header area */}
         <motion.header
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex-shrink-0 p-6"
+          className="flex-shrink-0 p-3"
         >
-          <div className="text-center space-y-2">
+          <div className="text-center space-y-1">
             <motion.h1
-              className="holographic-text text-4xl md:text-6xl font-bold tracking-wider"
+              className="holographic-text text-2xl md:text-3xl font-bold tracking-wider"
               animate={isVoiceActive ? {
                 textShadow: [
                   '0 0 10px rgba(0, 212, 255, 0.5)',
@@ -154,7 +148,7 @@ const MainLayout = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-jarvis-blue/70 font-rajdhani text-lg tracking-wide"
+              className="text-jarvis-blue/70 font-rajdhani text-sm tracking-wide"
             >
               Just A Rather Very Intelligent System
             </motion.p>
@@ -162,7 +156,7 @@ const MainLayout = ({
         </motion.header>
 
         {/* Main content area */}
-        <main className="flex-1 flex items-end justify-center p-6">
+        <main className="flex-1 flex items-center justify-center p-3">
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
@@ -210,11 +204,10 @@ const MainLayout = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
-          className="flex-shrink-0 p-4 text-center"
+          className="flex-shrink-0 p-2 text-center"
         >
-          <div className="text-xs text-jarvis-blue/50 font-rajdhani space-y-1">
-            <p>Powered by ElevenLabs Conversational AI</p>
-            <p>Built with React & Tailwind CSS</p>
+          <div className="text-xs text-jarvis-blue/50 font-rajdhani">
+            <p>Powered by ElevenLabs Conversational AI • Built with React & Tailwind CSS</p>
           </div>
         </motion.footer>
       </div>
@@ -251,35 +244,8 @@ const MainLayout = ({
         )}
       </AnimatePresence>
 
-      {/* ElevenLabs Widget */}
-      <AnimatePresence>
-        {showElevenLabsWidget && (
-          <motion.div
-            initial={{ opacity: 0, x: 400 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 400 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-4 right-4 z-30 max-w-sm"
-          >
-            <ElevenLabsWidget
-              agentId="agent_7601k23b460aeejb2pvyfcvw6atk"
-              onStatusChange={(status) => console.log('Widget status:', status)}
-              onConversationStart={() => console.log('Conversation started')}
-              onConversationEnd={() => console.log('Conversation ended')}
-              onError={(error) => console.error('Widget error:', error)}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ElevenLabs Widget Toggle Button */}
-      <ElevenLabsWidgetToggle
-        onToggle={handleWidgetToggle}
-        isVisible={showElevenLabsWidget}
-      />
-
       {/* Ambient particle effects */}
-      <div className="absolute inset-0 z-5 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         {Array.from({ length: 30 }).map((_, i) => (
           <motion.div
             key={i}

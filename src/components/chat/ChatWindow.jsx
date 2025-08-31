@@ -8,6 +8,7 @@ import MicrophoneButton from '../ui/MicrophoneButton.jsx';
 import StatusIndicator from '../ui/StatusIndicator.jsx';
 import { useElevenLabsWidget } from '../../hooks/useElevenLabsWidget.js';
 import { useError } from '../../contexts/ErrorContext.jsx';
+import ElevenLabsWidget from '../voice/ElevenLabsWidget.jsx';
 
 const Message = ({ message, isLast }) => {
   const isUser = message.sender === 'user';
@@ -25,18 +26,18 @@ const Message = ({ message, isLast }) => {
     >
       <div
         className={cn(
-          'max-w-[80%] p-3 rounded-lg backdrop-blur-sm',
+          'max-w-[80%] p-2 rounded-lg backdrop-blur-sm',
           isUser ? 'message-user' : 'message-assistant'
         )}
       >
-        <p className="text-sm leading-relaxed">{message.content}</p>
-        <div className="flex items-center justify-between mt-2">
+        <p className="text-xs leading-relaxed">{message.content}</p>
+        <div className="flex items-center justify-between mt-1">
           <span className="text-xs opacity-70">
             {formatTimestamp(message.timestamp)}
           </span>
           {message.status && (
             <span className={cn(
-              'text-xs px-2 py-1 rounded',
+              'text-xs px-1 py-0.5 rounded',
               message.status === 'sending' && 'bg-yellow-500/20 text-yellow-400',
               message.status === 'sent' && 'bg-green-500/20 text-green-400',
               message.status === 'error' && 'bg-red-500/20 text-red-400'
@@ -62,7 +63,7 @@ const MessageList = ({ messages, isLoading, className }) => {
   }, [messages]);
 
   return (
-    <div className={cn('flex-1 overflow-y-auto space-y-3 p-2', className)}>
+    <div className={cn('flex-1 overflow-y-auto space-y-2 p-1', className)}>
       <AnimatePresence>
         {messages.length === 0 ? (
           <motion.div
@@ -70,11 +71,11 @@ const MessageList = ({ messages, isLoading, className }) => {
             animate={{ opacity: 1 }}
             className="flex items-center justify-center h-full text-center"
           >
-            <div className="space-y-2">
-              <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-jarvis-blue to-jarvis-cyan flex items-center justify-center">
-                <div className="w-6 h-6 rounded-full bg-white animate-pulse" />
+            <div className="space-y-1">
+              <div className="w-8 h-8 mx-auto rounded-full bg-gradient-to-br from-jarvis-blue to-jarvis-cyan flex items-center justify-center">
+                <div className="w-4 h-4 rounded-full bg-white animate-pulse" />
               </div>
-              <p className="text-sm text-jarvis-blue/70 font-rajdhani">
+              <p className="text-xs text-jarvis-blue/70 font-rajdhani">
                 Start a conversation with JARVIS
               </p>
             </div>
@@ -96,13 +97,13 @@ const MessageList = ({ messages, isLoading, className }) => {
           animate={{ opacity: 1, y: 0 }}
           className="flex justify-start"
         >
-          <div className="message-assistant p-3 rounded-lg max-w-[80%]">
+          <div className="message-assistant p-2 rounded-lg max-w-[80%]">
             <div className="loading-dots">
               <div className="loading-dot bg-jarvis-cyan" />
               <div className="loading-dot bg-jarvis-cyan" />
               <div className="loading-dot bg-jarvis-cyan" />
             </div>
-            <p className="text-xs opacity-70 mt-2">JARVIS is thinking...</p>
+            <p className="text-xs opacity-70 mt-1">JARVIS is thinking...</p>
           </div>
         </motion.div>
       )}
@@ -273,10 +274,15 @@ const ChatWindow = ({
     <motion.div
       ref={chatWindowRef}
       className={cn(
-        'holographic-container relative',
-        'w-[300px] h-[400px] flex flex-col',
-        'backdrop-blur-xl border border-jarvis-blue/30',
-        'shadow-[0_0_30px_rgba(0,212,255,0.3)]',
+        'relative flex flex-col',
+        'w-[500px] h-[500px]',
+        'backdrop-blur-2xl',
+        'bg-gradient-to-br from-black/40 via-slate-900/60 to-black/40',
+        'border border-jarvis-blue/40',
+        'shadow-[0_0_50px_rgba(0,212,255,0.4),inset_0_0_50px_rgba(0,212,255,0.1)]',
+        'rounded-2xl overflow-hidden',
+        'before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-jarvis-blue/10 before:to-transparent before:animate-pulse',
+        'after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:via-jarvis-cyan/5 after:to-transparent',
         className
       )}
       initial={{ opacity: 0, scale: 0.9, y: 50 }}
@@ -284,51 +290,138 @@ const ChatWindow = ({
       transition={{ duration: 0.5, ease: 'easeOut' }}
       data-testid="chat-window"
     >
-      {/* Scan line effect */}
-      <div className="scan-line" />
+      {/* Holographic scan line effect */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-jarvis-blue/20 to-transparent animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-jarvis-cyan/10 to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
+      </div>
       
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-jarvis-blue/20">
-        <div className="flex items-center gap-3">
-          <motion.div 
-            className="w-8 h-8 rounded-full bg-gradient-to-br from-jarvis-blue to-jarvis-cyan flex items-center justify-center"
-            animate={isListening ? { scale: [1, 1.1, 1] } : {}}
-            transition={{ duration: 1, repeat: isListening ? Infinity : 0 }}
-          >
-            <div className="w-4 h-4 rounded-full bg-white animate-pulse" />
-          </motion.div>
-          <div>
-            <h3 className="font-orbitron text-sm font-semibold text-jarvis-blue tracking-wider">
-              JARVIS
-            </h3>
-            <StatusIndicator 
-              status={getCurrentStatus()}
-              message={getStatusMessage()}
-              className="text-xs"
-            />
+      {/* Holographic Header */}
+      <div className="relative p-3 border-b border-jarvis-blue/30 bg-gradient-to-r from-jarvis-blue/10 via-transparent to-jarvis-cyan/10">
+        {/* Holographic scan lines */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-jarvis-blue/5 to-transparent animate-pulse" />
+        
+        <div className="relative flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {/* Holographic JARVIS Icon */}
+            <motion.div 
+              className="relative w-8 h-8 rounded-full bg-gradient-to-br from-jarvis-blue/80 to-jarvis-cyan/80 flex items-center justify-center border-2 border-jarvis-blue/50"
+              animate={isListening ? { scale: [1, 1.1, 1] } : {}}
+              transition={{ duration: 1, repeat: isListening ? Infinity : 0 }}
+            >
+              <div className="w-4 h-4 rounded-full bg-white/90 animate-pulse" />
+              {/* Holographic rings */}
+              <div className="absolute inset-0 rounded-full border border-jarvis-blue/30 animate-spin-slow" />
+              <div className="absolute inset-1 rounded-full border border-jarvis-cyan/20 animate-spin-slow" style={{ animationDirection: 'reverse' }} />
+            </motion.div>
+            
+            <div className="space-y-0.5">
+              <h3 className="font-orbitron text-lg font-bold text-jarvis-blue tracking-wider drop-shadow-[0_0_10px_rgba(0,212,255,0.8)]">
+                JARVIS
+              </h3>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-xs text-jarvis-cyan/80 font-rajdhani uppercase tracking-wider">
+                  {getStatusMessage()}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Holographic Status Display */}
+          <div className="text-right space-y-0.5">
+            <div className="text-xs text-jarvis-blue/70 font-orbitron uppercase tracking-wider">
+              STATUS: ONLINE
+            </div>
+            <div className="text-xs text-jarvis-cyan/60 font-rajdhani">
+              STARK INDUSTRIES
+            </div>
+          </div>
+          
+
+        </div>
+      </div>
+
+      {/* Holographic Messages Area with Technical Readouts */}
+      <div className="relative flex-1 flex">
+        {/* Left Side - Technical Readouts */}
+        <div className="w-1/3 p-2 border-r border-jarvis-blue/20 bg-gradient-to-b from-transparent via-black/10 to-transparent">
+          <div className="space-y-2">
+            {/* System Status */}
+            <div className="space-y-1">
+              <div className="text-xs text-jarvis-blue/60 font-orbitron uppercase tracking-wider">SYSTEM STATUS</div>
+              <div className="space-y-0.5 text-xs text-jarvis-cyan/80 font-rajdhani">
+                <div className="flex justify-between">
+                  <span>POWER:</span>
+                  <span className="text-green-400">100%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>SYSTEMS:</span>
+                  <span className="text-green-400">NOMINAL</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>AI:</span>
+                  <span className="text-green-400">ACTIVE</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Holographic Circle */}
+            <div className="relative w-12 h-12 mx-auto">
+              <div className="w-full h-full rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-xs text-jarvis-blue font-orbitron">SV.0684</div>
+                  <div className="text-xs text-jarvis-cyan font-rajdhani">58 HZS</div>
+                </div>
+              </div>
+              <div className="absolute inset-0 rounded-full border border-jarvis-blue/30 animate-spin-slow" />
+              <div className="absolute inset-1 rounded-full border border-jarvis-cyan/20 animate-spin-slow" style={{ animationDirection: 'reverse' }} />
+            </div>
           </div>
         </div>
         
-        {/* Connection indicator */}
-        <motion.div 
-          className={cn(
-            'w-3 h-3 rounded-full transition-colors duration-300',
-            isConnected ? 'bg-green-400' : 'bg-red-400'
-          )}
-          animate={isConnected ? { opacity: [0.5, 1, 0.5] } : {}}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
+        {/* Right Side - Messages */}
+        <div className="relative flex-1 p-2 bg-gradient-to-b from-transparent via-black/20 to-transparent">
+          {/* Holographic grid pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="w-full h-full" style={{
+              backgroundImage: `
+                linear-gradient(rgba(0,212,255,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,212,255,0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '20px 20px'
+            }} />
+          </div>
+          
+          <MessageList
+            messages={chatState.messages}
+            isLoading={isLoading}
+            className="relative z-10"
+          />
+          
+          {/* Right Side Indicators */}
+          <div className="absolute top-2 right-2 space-y-2">
+            <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
+              <div className="text-sm font-bold text-jarvis-blue">85%</div>
+              <div className="text-xs text-jarvis-cyan font-rajdhani">NEURAL</div>
+            </div>
+            <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
+              <div className="text-sm font-bold text-jarvis-blue">92%</div>
+              <div className="text-xs text-jarvis-cyan font-rajdhani">VOICE</div>
+            </div>
+            <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
+              <div className="text-sm font-bold text-jarvis-blue">78%</div>
+              <div className="text-xs text-jarvis-cyan font-rajdhani">SYNC</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Messages area */}
-      <MessageList
-        messages={chatState.messages}
-        isLoading={isLoading}
-        className="flex-1"
-      />
-
-      {/* Input area */}
-      <div className="p-4 border-t border-jarvis-blue/20 space-y-3">
+      {/* Holographic Input Area */}
+      <div className="relative p-3 border-t border-jarvis-blue/30 bg-gradient-to-r from-jarvis-blue/5 via-transparent to-jarvis-cyan/5 space-y-2">
+        {/* Holographic glow effect */}
+        <div className="absolute inset-0 bg-gradient-to-t from-jarvis-blue/10 via-transparent to-transparent" />
+        
         {/* Error display */}
         <AnimatePresence>
           {chatState.error && (
@@ -336,15 +429,16 @@ const ChatWindow = ({
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/30 text-red-400 text-sm font-rajdhani"
+              className="relative px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-rajdhani backdrop-blur-sm"
             >
-              {chatState.error}
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-lg" />
+              <span className="relative z-10">{chatState.error}</span>
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Input form */}
-        <form onSubmit={handleInputSubmit} className="flex items-end gap-2">
+        <form onSubmit={handleInputSubmit} className="relative flex items-end gap-2">
           <div className="flex-1">
             <HolographicInput
               ref={inputRef}
@@ -353,33 +447,41 @@ const ChatWindow = ({
               placeholder="Type your message..."
               variant="chat"
               disabled={isLoading || isListening}
-              className="text-sm"
+              className="text-sm bg-black/30 border-jarvis-blue/50 focus:border-jarvis-cyan/70"
             />
           </div>
           
-          {/* Voice button */}
+          {/* Holographic Voice button */}
           <MicrophoneButton
             isListening={isListening}
             isProcessing={isLoading || isSpeaking}
             disabled={isLoading}
+            size="small"
             onToggle={handleVoiceToggle}
             aria-label={isListening ? "Stop voice input" : "Start voice input"}
+            className="relative"
           />
           
-          {/* Send button */}
+          {/* Holographic Send button */}
           <HolographicButton
             type="submit"
             size="small"
             disabled={!inputValue.trim() || isLoading || isListening}
             loading={isLoading}
-            className="px-3 py-2"
+            className="px-3 py-2 bg-gradient-to-r from-jarvis-blue/80 to-jarvis-cyan/80 hover:from-jarvis-blue hover:to-jarvis-cyan border-jarvis-blue/50"
           >
             Send
           </HolographicButton>
         </form>
 
+        {/* Holographic Status Bar */}
+        <div className="relative flex items-center justify-between text-xs text-jarvis-blue/60 font-rajdhani uppercase tracking-wider">
+          <span>NATURAL LANGUAGE PROCESSING: ACTIVE</span>
+          <span>RESPONSE SYNTHESIS: STANDBY</span>
+        </div>
+
         {/* Keyboard shortcuts hint */}
-        <div className="text-xs text-jarvis-blue/50 font-rajdhani text-center">
+        <div className="text-xs text-jarvis-blue/40 font-rajdhani text-center">
           Ctrl+Enter to send • Esc to cancel • Space to toggle voice
         </div>
       </div>
@@ -418,6 +520,18 @@ const ChatWindow = ({
           />
         )}
       </AnimatePresence>
+
+      {/* ElevenLabs Widget - Bottom Right */}
+      <div className="absolute bottom-2 right-2 z-50">
+        <ElevenLabsWidget
+          agentId="agent_7601k23b460aeejb2pvyfcvw6atk"
+          onStatusChange={handleStatusChange}
+          onConversationStart={handleConversationStart}
+          onConversationEnd={handleConversationEnd}
+          onError={handleWidgetError}
+          className="w-12 h-12 rounded-full bg-gradient-to-br from-jarvis-blue/80 to-jarvis-cyan/80 border-2 border-jarvis-blue/50 shadow-[0_0_20px_rgba(0,212,255,0.6)] hover:shadow-[0_0_30px_rgba(0,212,255,0.8)] transition-all duration-300"
+        />
+      </div>
     </motion.div>
   );
 };

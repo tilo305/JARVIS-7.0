@@ -2,10 +2,9 @@
 node_modules/
 .pnpm-store/
 
-# Build outputs
+# Production builds
 dist/
 build/
-*.tsbuildinfo
 
 # Environment variables
 .env
@@ -67,7 +66,6 @@ jspm_packages/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Storybook build outputs
 .out
@@ -93,5 +91,6 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Test files
-test-components.js
+# Keep auto-startup scripts
+!start.bat
+!start.ps1
