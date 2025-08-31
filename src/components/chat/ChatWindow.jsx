@@ -342,149 +342,148 @@ const ChatWindow = ({
         </div>
       </div>
 
-      {/* Holographic Messages Area with Technical Readouts */}
-      <div className="relative flex-1 flex">
-        {/* Left Side - Technical Readouts */}
-        <div className="w-1/3 p-2 border-r border-jarvis-blue/20 bg-gradient-to-b from-transparent via-black/10 to-transparent">
-          <div className="space-y-2">
-            {/* System Status */}
-            <div className="space-y-1">
-              <div className="text-xs text-jarvis-blue/60 font-orbitron uppercase tracking-wider">SYSTEM STATUS</div>
-              <div className="space-y-0.5 text-xs text-jarvis-cyan/80 font-rajdhani">
-                <div className="flex justify-between">
-                  <span>POWER:</span>
-                  <span className="text-green-400">100%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>SYSTEMS:</span>
-                  <span className="text-green-400">NOMINAL</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>AI:</span>
-                  <span className="text-green-400">ACTIVE</span>
-                </div>
-              </div>
-            </div>
-            
-            {/* Holographic Circle */}
-            <div className="relative w-12 h-12 mx-auto">
-              <div className="w-full h-full rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-xs text-jarvis-blue font-orbitron">SV.0684</div>
-                  <div className="text-xs text-jarvis-cyan font-rajdhani">58 HZS</div>
-                </div>
-              </div>
-              <div className="absolute inset-0 rounded-full border border-jarvis-blue/30 animate-spin-slow" />
-              <div className="absolute inset-1 rounded-full border border-jarvis-cyan/20 animate-spin-slow" style={{ animationDirection: 'reverse' }} />
-            </div>
-          </div>
-        </div>
-        
-        {/* Right Side - Messages */}
-        <div className="relative flex-1 p-2 bg-gradient-to-b from-transparent via-black/20 to-transparent">
-          {/* Holographic grid pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="w-full h-full" style={{
-              backgroundImage: `
-                linear-gradient(rgba(0,212,255,0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,212,255,0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: '20px 20px'
-            }} />
-          </div>
-          
-          <MessageList
-            messages={chatState.messages}
-            isLoading={isLoading}
-            className="relative z-10"
-          />
-          
-          {/* Right Side Indicators */}
-          <div className="absolute top-2 right-2 space-y-2">
-            <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
-              <div className="text-sm font-bold text-jarvis-blue"></div>
-              <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
-            </div>
-            <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
-              <div className="text-sm font-bold text-jarvis-blue"></div>
-              <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
-            </div>
-            <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
-              <div className="text-sm font-bold text-jarvis-blue"></div>
-              <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+             {/* Holographic Messages Area with Technical Readouts */}
+       <div className="relative flex-1 flex">
+         {/* Left Side - Technical Readouts */}
+         <div className="w-1/3 p-2 border-r border-jarvis-blue/20 bg-gradient-to-b from-transparent via-black/10 to-transparent">
+           <div className="space-y-2">
+             {/* System Status */}
+             <div className="space-y-1">
+               <div className="text-xs text-jarvis-blue/60 font-orbitron uppercase tracking-wider">SYSTEM STATUS</div>
+               <div className="space-y-0.5 text-xs text-jarvis-cyan/80 font-rajdhani">
+                 <div className="flex justify-between">
+                   <span>POWER:</span>
+                   <span className="text-green-400">100%</span>
+                 </div>
+                 <div className="flex justify-between">
+                   <span>SYSTEMS:</span>
+                   <span className="text-green-400">NOMINAL</span>
+                 </div>
+                 <div className="flex justify-between">
+                   <span>AI:</span>
+                   <span className="text-green-400">ACTIVE</span>
+                 </div>
+               </div>
+             </div>
+             
+             {/* Holographic Circle */}
+             <div className="relative w-12 h-12 mx-auto">
+               <div className="w-full h-full rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex items-center justify-center">
+                 <div className="text-center">
+                   <div className="text-xs text-jarvis-blue font-orbitron">SV.0684</div>
+                   <div className="text-xs text-jarvis-cyan font-rajdhani">58 HZS</div>
+                 </div>
+               </div>
+               <div className="absolute inset-0 rounded-full border border-jarvis-blue/30 animate-spin-slow" />
+               <div className="absolute inset-1 rounded-full border border-jarvis-cyan/20 animate-spin-slow" style={{ animationDirection: 'reverse' }} />
+             </div>
+           </div>
+         </div>
+         
+         {/* Right Side - Messages */}
+         <div className="relative flex-1 p-2 bg-gradient-to-b from-transparent via-black/20 to-transparent">
+           {/* Holographic grid pattern */}
+           <div className="absolute inset-0 opacity-10">
+             <div className="w-full h-full" style={{
+               backgroundImage: `
+                 linear-gradient(rgba(0,212,255,0.3) 1px, transparent 1px),
+                 linear-gradient(90deg, rgba(0,212,255,0.3) 1px, transparent 1px)
+               `,
+               backgroundSize: '20px 20px'
+             }} />
+           </div>
+           
+           <MessageList
+             messages={chatState.messages}
+             isLoading={isLoading}
+             className="relative z-10"
+           />
+           
+           {/* Right Side Indicators */}
+           <div className="absolute top-2 right-2 space-y-2">
+             <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
+               <div className="text-sm font-bold text-jarvis-blue"></div>
+               <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
+             </div>
+             <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
+               <div className="text-sm font-bold text-jarvis-blue"></div>
+               <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
+             </div>
+             <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
+               <div className="text-sm font-bold text-jarvis-blue"></div>
+               <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
+             </div>
+           </div>
+         </div>
+       </div>
 
-      {/* Holographic Input Area */}
-      <div className="relative p-3 border-t border-jarvis-blue/30 bg-gradient-to-r from-jarvis-blue/5 via-transparent to-jarvis-cyan/5 space-y-2">
-        {/* Holographic glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-t from-jarvis-blue/10 via-transparent to-transparent" />
-        
-        {/* Error display */}
-        <AnimatePresence>
-          {chatState.error && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="relative px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-rajdhani backdrop-blur-sm"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-lg" />
-              <span className="relative z-10">{chatState.error}</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+       {/* Holographic Input Area - Moved Up and Made Bigger */}
+       <div className="relative p-8 border-t border-jarvis-blue/30 bg-gradient-to-r from-jarvis-blue/5 via-transparent to-jarvis-cyan/5 space-y-6">
+         {/* Holographic glow effect */}
+         <div className="absolute inset-0 bg-gradient-to-t from-jarvis-blue/10 via-transparent to-transparent" />
+         
+         {/* Error display */}
+         <AnimatePresence>
+           {chatState.error && (
+             <motion.div
+               initial={{ opacity: 0, height: 0 }}
+               animate={{ opacity: 1, height: 'auto' }}
+               exit={{ opacity: 0, height: 0 }}
+               className="relative px-3 py-2 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-rajdhani backdrop-blur-sm"
+             >
+               <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 rounded-lg" />
+               <span className="relative z-10">{chatState.error}</span>
+             </motion.div>
+           )}
+         </AnimatePresence>
 
-        {/* Input form */}
-        <form onSubmit={handleInputSubmit} className="relative flex items-end gap-2">
-          <div className="flex-1">
-            <HolographicInput
-              ref={inputRef}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Type your message..."
-              variant="chat"
-              disabled={isLoading || isListening}
-              className="text-sm bg-black/30 border-jarvis-blue/50 focus:border-jarvis-cyan/70"
-            />
-          </div>
-          
-          {/* Holographic Voice button */}
-          <MicrophoneButton
-            isListening={isListening}
-            isProcessing={isLoading || isSpeaking}
-            disabled={isLoading}
-            size="small"
-            onToggle={handleVoiceToggle}
-            aria-label={isListening ? "Stop voice input" : "Start voice input"}
-            className="relative"
-          />
-          
-          {/* Holographic Send button */}
-          <HolographicButton
-            type="submit"
-            size="small"
-            disabled={!inputValue.trim() || isLoading || isListening}
-            loading={isLoading}
-            className="px-3 py-2 bg-gradient-to-r from-jarvis-blue/80 to-jarvis-cyan/80 hover:from-jarvis-blue hover:to-jarvis-cyan border-jarvis-blue/50"
-          >
-            Send
-          </HolographicButton>
-        </form>
+         {/* Input form */}
+         <form onSubmit={handleInputSubmit} className="relative flex items-end gap-6">
+           <div className="flex-1">
+             <HolographicInput
+               ref={inputRef}
+               value={inputValue}
+               onChange={(e) => setInputValue(e.target.value)}
+               placeholder="Type your message..."
+               variant="chat"
+               disabled={isLoading || isListening}
+               className="text-3xl bg-black/60 border-3 border-jarvis-blue/70 focus:border-jarvis-cyan/90 h-40 px-12 py-10 rounded-2xl shadow-[0_0_40px_rgba(0,212,255,0.5)] transition-all duration-300 font-bold"
+             />
+           </div>
+           
+           {/* Holographic Voice button */}
+           <MicrophoneButton
+             isListening={isListening}
+             isProcessing={isLoading || isSpeaking}
+             disabled={isLoading}
+             size="small"
+             onToggle={handleVoiceToggle}
+             aria-label={isListening ? "Stop voice input" : "Start voice input"}
+             className="relative"
+           />
+           
+           {/* Holographic Send button */}
+           <HolographicButton
+             type="submit"
+             size="small"
+             disabled={!inputValue.trim() || isLoading || isListening}
+             loading={isLoading}
+             className="px-12 py-6 h-40 bg-gradient-to-r from-jarvis-blue/80 to-jarvis-cyan/80 hover:from-jarvis-blue hover:to-jarvis-cyan border-jarvis-blue/50 rounded-2xl shadow-[0_0_40px_rgba(0,212,255,0.5)] transition-all duration-300 text-xl font-bold"
+           >
+             Send
+           </HolographicButton>
+         </form>
 
-        {/* Holographic Status Bar */}
-        <div className="relative flex items-center justify-between text-xs text-jarvis-blue/60 font-rajdhani uppercase tracking-wider">
-          <span>NATURAL LANGUAGE PROCESSING: ACTIVE</span>
-          <span>RESPONSE SYNTHESIS: STANDBY</span>
-        </div>
+         {/* Holographic Status Bar */}
+         <div className="relative flex items-center justify-between text-xs text-jarvis-blue/60 font-rajdhani uppercase tracking-wider">
+           <span></span>
+           <span></span>
+         </div>
 
-        {/* Keyboard shortcuts hint */}
-        <div className="text-xs text-jarvis-blue/40 font-rajdhani text-center">
-          Ctrl+Enter to send • Esc to cancel • Space to toggle voice
-        </div>
-      </div>
+         {/* Keyboard shortcuts hint */}
+         <div className="text-xs text-jarvis-blue/40 font-rajdhani text-center">
+         </div>
+       </div>
 
       {/* Particle effects */}
       <div className="particle-field absolute inset-0 pointer-events-none">
