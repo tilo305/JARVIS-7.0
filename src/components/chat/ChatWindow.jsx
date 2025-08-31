@@ -402,16 +402,16 @@ const ChatWindow = ({
           {/* Right Side Indicators */}
           <div className="absolute top-2 right-2 space-y-2">
             <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
-              <div className="text-sm font-bold text-jarvis-blue">85%</div>
-              <div className="text-xs text-jarvis-cyan font-rajdhani">NEURAL</div>
+              <div className="text-sm font-bold text-jarvis-blue"></div>
+              <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
             </div>
             <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
-              <div className="text-sm font-bold text-jarvis-blue">92%</div>
-              <div className="text-xs text-jarvis-cyan font-rajdhani">VOICE</div>
+              <div className="text-sm font-bold text-jarvis-blue"></div>
+              <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
             </div>
             <div className="w-10 h-10 rounded-full border-2 border-jarvis-blue/40 bg-gradient-to-br from-jarvis-blue/20 to-jarvis-cyan/20 flex flex-col items-center justify-center">
-              <div className="text-sm font-bold text-jarvis-blue">78%</div>
-              <div className="text-xs text-jarvis-cyan font-rajdhani">SYNC</div>
+              <div className="text-sm font-bold text-jarvis-blue"></div>
+              <div className="text-xs text-jarvis-cyan font-rajdhani"></div>
             </div>
           </div>
         </div>
